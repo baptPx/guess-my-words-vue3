@@ -1,0 +1,15 @@
+<template>
+  <home-component></home-component>
+</template>
+
+<script lang="ts" setup>
+  import HomeComponent from '@/components/HomeComponent'
+</script>
+<style>
+  h1 {
+    color: #D2AA45;
+    text-align: center;
+    margin: 2rem;
+    font-size: 3rem;
+  }
+</style>
