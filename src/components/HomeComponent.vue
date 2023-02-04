@@ -53,7 +53,7 @@ const login = async () => {
     if(result && result.data) {
       const {token, username} = result.data
       if(token) {
-        sessionStorage.setItem('token', result.data.token)
+        localStorage.setItem('token', result.data.token)
         store.setUserAccount({
           username: result.data.username
         })

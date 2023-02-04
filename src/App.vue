@@ -1,6 +1,6 @@
 <template>
   <v-app id="app">
-    <h1>Guess My Words</h1>
+    <h1 @click="router.push('/')">Guess My Words</h1>
 
     <router-view />
   </v-app>
@@ -8,8 +8,10 @@
 
 
 <script lang="ts" setup>
-  import styles from './styles/settings.scss'
+import { useRouter } from 'vue-router';
+import styles from './styles/settings.scss'
 
+let router = useRouter()
   //
 </script>
 <style>

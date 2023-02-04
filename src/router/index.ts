@@ -14,6 +14,20 @@ const routes = [
     path: '/edit',
     component: () => import('@/views/EditView.vue'),
   },
+  
+  {
+    path: '/edit/:mapId',
+    component: () => import('@/views/EditView.vue'),
+  },
+
+  {
+    path: '/play',
+    component: () => import('@/views/PlayView.vue'),
+  },
+  {
+    path: '/play/:mapId',
+    component: () => import('@/views/PlayView.vue'),
+  },
 ]
 
 const router = createRouter({

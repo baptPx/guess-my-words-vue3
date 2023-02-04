@@ -1,37 +1,47 @@
 <template>
-  <img :src="isSelected() ? targetred : target"
+  {{ shouldShow ? 'show' : '' }}
+  <img :src="isRed ? targetred : target"
+  @click="emits('eventa')"
        :style="
      'left: '+ (point.x - point.width/2) + '%;' +
       'top: '+ (point.y - point.width/2) + '%;' +
       'width:' + point.width + '%;' +
-      'opacity:' + (point.find ? 1 : 1) + ';'"
-       @click="setSelectedPoint"/>
-
+      'opacity:' + (shouldShow ? 1 : 0) + ';'"
+      />
+  <!-- <p       -->
+    <!-- v-if="showLabel"
+    :style="
+     'left: '+ (point.x - point.width/2) + '%;' +
+      'top: '+ (point.y - point.width/2 - 5) + '%;' +
+      'width:' + point.width + '%;' +
+      'opacity:' + (shouldShow ? 1 : 1) + ';'">{{ point.label }}</p> -->
 </template>
 
 <script setup lang="ts">
 import target from '../assets/target.svg'
 import targetred from '../assets/targetred.svg'
-import Point from "@/models/IPoint";
-import {PropType} from "vue";
+import {onMounted, PropType} from "vue";
+import IPoint from '@/models/IPoint';
 
+let showLabel = true
 const props = defineProps({
   point: {
-    type: Object as PropType<Point>
+    type: Object as PropType<IPoint>,
+    required: true 
   },
-  selectedPoint: Number
+  isRed: Boolean,
+  shouldShow: {
+    type: Boolean
+  }
 })
-
-const isSelected = () => {
-  return props.selectedPoint === 1
-}
-const setSelectedPoint = () => {
-
-}
+onMounted(() => {
+  // console.log('props', props.shouldShow)
+})
+const emits = defineEmits(['eventa'])
 </script>
 
 <style scoped>
-  img {
+  img, p {
     position: absolute;
     cursor: pointer;
   }
