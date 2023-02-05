@@ -5,6 +5,7 @@
         v-for="(point, index) of localPoints"
         :point="point"
         :key="'point-' + index"
+        :shouldShow="true"
         :is-red="index === localPoints.length - 1"
         />
     <point-component v-if="isOnAdd" :point="pointToAdd" class="no-cursor" ></point-component>
@@ -12,7 +13,7 @@
 <div id="edit-menu">
     <h2>Éléments</h2>
     <v-btn v-if="!isOnAdd" @click="isOnAdd = true">Ajouter (A)</v-btn>
-    <v-btn v-if="isOnAdd" @click="isOnAdd = true">Stop (Z)</v-btn>
+    <v-btn v-if="isOnAdd" @click="isOnAdd = false">Stop (Z)</v-btn>
     <div v-if="isOnAdd">
         <v-slider v-model="pointToAdd.width" label="Taille de la cible (q/s)"></v-slider>
         <v-text-field  v-model="pointToAdd.label" label="label"></v-text-field>

@@ -63,11 +63,9 @@ onMounted(async () => {
     .filter(p => p.find)
     .map(p => p.label)
   }
-  console.log('play', map.value?.fileName)
 })
 
 const selectItem = (index: number) => {
-  console.log('index', index)
   selectedItem.value = index
 }
 const validateAnswer = async () => {
@@ -82,8 +80,7 @@ const validateAnswer = async () => {
     point.find = true
     if(findItems.value.findIndex(item => item === data.label) === -1) findItems.value.push(data.label)
   }
-  console.log(data)
-}
+  }
 </script>
 <style>
   h1 {

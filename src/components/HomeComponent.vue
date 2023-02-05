@@ -1,5 +1,4 @@
 <template>
-  {{action}}
   <v-container class="fill-height" v-if="action === Action.HOME">
     <v-btn @click="action = Action.LOGIN">
       Connexion
@@ -23,10 +22,23 @@
       </v-btn>
 
   </v-container>
+
+  <v-container class="fill-height" v-else-if="action === Action.REGISTER">
+      <v-text-field v-model="username" label="username"></v-text-field>
+      <v-text-field v-model="password" label="password" type="password"></v-text-field>
+
+      <v-btn @click="action = Action.HOME">
+        Retour
+      </v-btn>
+
+      <v-btn @click="register">
+        Inscription
+      </v-btn>
+
+  </v-container>
 </template>
 
 <script lang="ts" setup>
-  //
 import {useRouter} from "vue-router";
 import {useStore} from "@/store/app";
 import {ref} from "vue";
@@ -45,8 +57,15 @@ let action = ref(Action.HOME)
 let username = ref('')
 let password = ref('')
 const login = async () => {
+  logOrCreate(false)
+}
+const register = () => {
+  logOrCreate(true)
+}
+const logOrCreate = async(isRegister: boolean) => {
   try {
-    let result = await axios.post(API_URL + '/api/users/login', {
+    const url = `${API_URL}/api/users/${isRegister ? '' : 'login'}`
+    let result = await axios.post(url, {
       username: username.value,
       password: password.value
     })
@@ -60,16 +79,10 @@ const login = async () => {
         router.push('home')
       }
     }
-    console.log(result)
   } catch(err) {
-    console.log('err login', err)
+    console.log('Error login', err)
   }
-
 }
-const register = () => {
-
-}
-
 
 </script>
 <style lang="scss" scoped>

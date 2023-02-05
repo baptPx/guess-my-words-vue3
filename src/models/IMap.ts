@@ -4,5 +4,6 @@ export default interface IMap {
     fileName: string,
     title: string,
     description: string, 
-    points: IPoint[]
+    points: IPoint[],
+    id: number
 }

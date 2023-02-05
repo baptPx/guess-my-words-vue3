@@ -1,3 +1,4 @@
 export default interface IAccount {
-  username: string
+  username: string,
+  id: number
 }

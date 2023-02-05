@@ -1,5 +1,4 @@
 <template>
-  {{ shouldShow ? 'show' : '' }}
   <img :src="isRed ? targetred : target"
   @click="emits('eventa')"
        :style="
@@ -8,13 +7,13 @@
       'width:' + point.width + '%;' +
       'opacity:' + (shouldShow ? 1 : 0) + ';'"
       />
-  <!-- <p       -->
-    <!-- v-if="showLabel"
+  <p      
+    v-if="showLabel"
     :style="
      'left: '+ (point.x - point.width/2) + '%;' +
       'top: '+ (point.y - point.width/2 - 5) + '%;' +
       'width:' + point.width + '%;' +
-      'opacity:' + (shouldShow ? 1 : 1) + ';'">{{ point.label }}</p> -->
+      'opacity:' + (shouldShow ? 1 : 1) + ';'">{{ point.label }}</p>
 </template>
 
 <script setup lang="ts">
