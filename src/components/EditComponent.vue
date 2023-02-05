@@ -8,7 +8,7 @@
         :shouldShow="true"
         :is-red="index === localPoints.length - 1"
         />
-    <point-component v-if="isOnAdd" :point="pointToAdd" class="no-cursor" ></point-component>
+    <point-component v-if="isOnAdd" :should-show="isOnAdd" :point="pointToAdd" class="no-cursor" ></point-component>
 </div>
 <div id="edit-menu">
     <h2>Éléments</h2>
@@ -20,16 +20,16 @@
         <v-text-field  v-model="pointToAdd.possibleAnswers" label="Réponses possibles ex : ([aA]ngleterre|[gG]rande[ -]?[bB]retagne)"></v-text-field>
     
     </div>
+    <ul>
+        <li v-for="(point, index) of points" :key="'pointlist-' + index">
+            {{ point.label }} - {{ point.possibleAnswers }}
+        </li>
+    </ul>
 </div>
-  
 </template>
 <script lang="ts" setup>
-import { API_URL } from '@/configs/constants';
 import IPoint from '@/models/IPoint';
-import { isOn } from '@vue/shared';
-import axios from 'axios';
 import { onMounted, PropType, ref } from 'vue';
-import target from '../assets/target.svg'
 import PointComponent from './PointComponent.vue';
 
 const emit = defineEmits(['edit-points', 'add-point', 'delete-point'])
@@ -59,8 +59,7 @@ onMounted(() => {
         if(pointToAdd.value.width > 2 && ev.key === 'q') pointToAdd.value.width -= 2
         if(ev.key === 'a') isOnAdd.value = true
         if(ev.key === 'z') isOnAdd.value = false
-        if(ev.key === 'enter') confirmAdd()
-        if(ev.key === 'enter') emit('delete-point')
+        if(ev.key === 'e') emit('delete-point')
     });
 })
 
@@ -79,9 +78,6 @@ const placeTarget = (event: any) => {
         })
     }
     emit('add-point', pointToAdd.value)
-}
-const confirmAdd = () => {
-    
 }
 </script>
 <style>

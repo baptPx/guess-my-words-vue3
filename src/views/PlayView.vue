@@ -24,6 +24,15 @@
         ></v-text-field>
         <v-btn @click="validateAnswer">Valider</v-btn>
       </div>
+      <v-alert
+        v-if="success"
+        type="success"
+      >Bravo ! tu as trouvé une bonne réponse</v-alert>
+      
+      <v-alert
+        v-if="misstake"
+        type="error"
+      >Non c'est pas ça, essaie encore</v-alert>
       <ul>
         <li 
         v-for="point of findItems"
@@ -31,17 +40,18 @@
         {{ point }}
         </li>
       </ul>
+
     </div>
 </div>
 </template>
 
 <script lang="ts" setup>
 import { API_URL } from '@/configs/constants';
-import axios from 'axios';
 import { onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import type IMap from '../models/IMap'
 import PointComponent from '@/components/PointComponent.vue';
+import APIService from '@/services/APIService';
 
 
 const route = useRoute()
@@ -50,14 +60,12 @@ let selectedItem = ref(-1)
 let typedText = ref('')
 let mapId = ref(-1)
 let findItems = ref<string[]>([])
+let success = ref(false)
+let misstake = ref(false)
 onMounted(async () => {
   mapId.value = +route.params.mapId
-  let play = await axios.get(`${API_URL}/api/maps/${mapId.value}/play`, {
-    headers: {
-      authorization: 'Bearer ' + localStorage.getItem('token')
-    }
-  })
-  map.value = play.data
+  let play = await APIService.get(`/api/maps/${mapId.value}/play`)
+  map.value = play
   if(map.value) {
     findItems.value = map.value?.points
     .filter(p => p.find)
@@ -70,15 +78,18 @@ const selectItem = (index: number) => {
 }
 const validateAnswer = async () => {
   const point = map.value?.points[selectedItem.value]
-  const { data } = await axios.post(`${API_URL}/api/maps/${mapId.value}/play/${point?.id}`, 
-  {answer: typedText.value}, {
-    headers: {
-      authorization: 'Bearer ' + localStorage.getItem('token')
-    }
+  const data = await APIService.post(`/api/maps/${mapId.value}/play/${point?.id}`, {
+    answer: typedText.value
   })
   if(point && data.correct) {
+    success.value = true
+    setTimeout(() => success.value = false, 5000)
     point.find = true
     if(findItems.value.findIndex(item => item === data.label) === -1) findItems.value.push(data.label)
+  } else {
+    
+    misstake.value = true
+    setTimeout(() => misstake.value = false, 5000)
   }
   }
 </script>

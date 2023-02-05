@@ -1,7 +1,6 @@
 // Composables
-import { API_URL } from '@/configs/constants'
+import APIService from '@/services/APIService'
 import { useStore } from '@/store/app'
-import axios from 'axios'
 import { createRouter, createWebHistory } from 'vue-router'
 
 const routes = [
@@ -41,10 +40,9 @@ router.beforeEach(async (to, from, next) => {
 
   const store = useStore()
   const token = localStorage.getItem('token')
-  if(store.getUserAccount.id === -1 && token) {
-    const {data} = await axios.get( `${API_URL}/api/users/account`, {
-      headers: { authorization: `Bearer ${token}`}
-    })
+  if(store.getUserAccount?.id === -1 && token) {
+    console.log('not logged but token', store.getUserAccount)
+    const data = await APIService.get('/api/users/account')
     store.setUserAccount(data)
   } 
   if(store.isLogged && to.fullPath === '/') {

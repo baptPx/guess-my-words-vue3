@@ -11,9 +11,9 @@
     v-if="showLabel"
     :style="
      'left: '+ (point.x - point.width/2) + '%;' +
-      'top: '+ (point.y - point.width/2 - 5) + '%;' +
+      'top: '+ (point.y - point.width/2 - 2) + '%;' +
       'width:' + point.width + '%;' +
-      'opacity:' + (shouldShow ? 1 : 1) + ';'">{{ point.label }}</p>
+      'opacity:' + (shouldShow ? 1 : 0) + ';'">{{ point.label }}</p>
 </template>
 
 <script setup lang="ts">
@@ -33,9 +33,6 @@ const props = defineProps({
     type: Boolean
   }
 })
-onMounted(() => {
-  // console.log('props', props.shouldShow)
-})
 const emits = defineEmits(['eventa'])
 </script>
 
@@ -43,5 +40,9 @@ const emits = defineEmits(['eventa'])
   img, p {
     position: absolute;
     cursor: pointer;
+  }
+  p {
+    background-color: black;
+    width: min-width;
   }
 </style>

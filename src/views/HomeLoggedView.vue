@@ -26,8 +26,8 @@
 <script lang="ts" setup>
 import { API_URL } from '@/configs/constants';
 import IMap from '@/models/IMap';
+import APIService from '@/services/APIService';
 import { useStore } from '@/store/app';
-import axios from 'axios';
 import { onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
 
@@ -38,12 +38,10 @@ let mapsPlay = ref<IMap[]>([])
 let mapsEdit = ref<IMap[]>([])
 
 onMounted(async () => {
-  mapsPlay.value = await axios.get(API_URL + '/api/maps/plays', {
-    headers: {Authorization: 'Bearer ' + localStorage.getItem('token')}
-  }).then(res => res.data)
-  mapsEdit.value = await axios.get(API_URL + '/api/maps/edits', {
-    headers: {Authorization: 'Bearer ' + localStorage.getItem('token')}
-  }).then(res => res.data)
+  [mapsPlay.value, mapsEdit.value] = await Promise.all([
+    APIService.get('/api/maps/plays'),
+    APIService.get('/api/maps/edits')
+  ])
 })
 </script>
 <style lang="scss" scoped>
