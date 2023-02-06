@@ -74,7 +74,8 @@ const logOrCreate = async(isRegister: boolean) => {
       if(token) {
         localStorage.setItem('token', result.data.token)
         store.setUserAccount({
-          username: result.data.username
+          username: result.data.username,
+          id: result.data.id
         })
         router.push('home')
       }

@@ -3,7 +3,7 @@
 </template>
 
 <script lang="ts" setup>
-  import HomeComponent from '@/components/HomeComponent'
+  import HomeComponent from '@/components/HomeComponent.vue'
 </script>
 <style>
   h1 {
