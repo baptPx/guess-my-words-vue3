@@ -41,7 +41,6 @@ router.beforeEach(async (to, from, next) => {
   const store = useStore()
   const token = localStorage.getItem('token')
   if(store.getUserAccount?.id === -1 && token) {
-    console.log('not logged but token', store.getUserAccount)
     const data = await APIService.get('/api/users/account')
     store.setUserAccount(data)
   } 

@@ -19,3 +19,15 @@
     0px 1px 5px 0px var(--v-shadow-key-penumbra-opacity, white);
 }
 
+#app {
+  margin-top: 0;
+}
+p, h2, h3, input::placeholder, .v-field__field {
+  color: white;
+}
+h1 {
+  color: #D2AA45;
+}
+input {
+  border-color: white;
+}

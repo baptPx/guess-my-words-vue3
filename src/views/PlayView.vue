@@ -64,7 +64,7 @@ let success = ref(false)
 let misstake = ref(false)
 onMounted(async () => {
   mapId.value = +route.params.mapId
-  let play = await APIService.get(`/api/maps/${mapId.value}/play`)
+  let play = await APIService.get(`/api/maps/${mapId.value}/plays`)
   map.value = play
   if(map.value) {
     findItems.value = map.value?.points
@@ -78,7 +78,7 @@ const selectItem = (index: number) => {
 }
 const validateAnswer = async () => {
   const point = map.value?.points[selectedItem.value]
-  const data = await APIService.post(`/api/maps/${mapId.value}/play/${point?.id}`, {
+  const data = await APIService.post(`/api/maps/${mapId.value}/plays/${point?.id}`, {
     answer: typedText.value
   })
   if(point && data.correct) {

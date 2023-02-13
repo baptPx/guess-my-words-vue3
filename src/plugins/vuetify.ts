@@ -25,7 +25,7 @@ const myTheme : ThemeDefinition = {
 
 export default createVuetify({
   theme: {
-
+    
     defaultTheme: 'myTheme',
     themes: {
       myTheme
