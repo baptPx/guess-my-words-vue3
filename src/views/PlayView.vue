@@ -1,7 +1,7 @@
 <template>
   <div  v-if="map !== null">
     <div id="screen">
-        <img :src="API_URL + '/images/' + map.fileName + '.png'" alt="map">
+        <img :src="API_URL + '/images/' + map.fileName" alt="map">
         <point-component 
             v-for="(point, index) of map.points"
             :point="point"
@@ -64,7 +64,7 @@ let success = ref(false)
 let misstake = ref(false)
 onMounted(async () => {
   mapId.value = +route.params.mapId
-  let play = await APIService.get(`/api/maps/${mapId.value}/plays`)
+  let play = await APIService.get(`/api/plays/${mapId.value}`)
   map.value = play
   if(map.value) {
     findItems.value = map.value?.points
@@ -78,7 +78,7 @@ const selectItem = (index: number) => {
 }
 const validateAnswer = async () => {
   const point = map.value?.points[selectedItem.value]
-  const data = await APIService.post(`/api/maps/${mapId.value}/plays/${point?.id}`, {
+  const data = await APIService.post(`/api/plays/${point?.id}`, {
     answer: typedText.value
   })
   if(point && data.correct) {

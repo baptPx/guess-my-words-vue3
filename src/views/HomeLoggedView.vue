@@ -5,7 +5,7 @@
   <v-col v-for="play of mapsPlay" :key="'mapplay-' + play.id" class="card" cols="4" @click="router.push('/play/' + play.id)">
     <h3>{{ play.title }}</h3>
     <p>{{ play.description }}</p>
-    <img :src="API_URL + '/images/' + play.fileName + '.png'" />
+    <img :src="API_URL + '/images/' + play.fileName" />
   </v-col>
 </v-row>
 
@@ -18,7 +18,7 @@
   <v-col v-for="edit of mapsEdit" :key="'mapedit-' + edit.id" class="card" cols="4" @click="router.push('/edit/' + edit.id)">
     <h3>{{ edit.title }}</h3>
     <p>{{ edit.description }}</p>
-    <img :src="API_URL + '/images/' + edit.fileName + '.png'" />
+    <img :src="API_URL + '/images/' + edit.fileName" />
   </v-col>
 </v-row>
 </template>
@@ -39,8 +39,8 @@ let mapsEdit = ref<IMap[]>([])
 
 onMounted(async () => {
   [mapsPlay.value, mapsEdit.value] = await Promise.all([
-    APIService.get('/api/maps/plays'),
-    APIService.get('/api/maps/edits')
+    APIService.get('/api/plays'),
+    APIService.get('/api/edits')
   ])
 })
 </script>

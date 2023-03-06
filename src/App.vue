@@ -1,5 +1,8 @@
 <template>
   <v-app id="app">
+    <div class="menu">
+      <span @click="logout()">Déconnexion</span>
+    </div>
     <h1 @click="router.push('/')">Guess My Words</h1>
 
     <router-view />
@@ -11,7 +14,10 @@
 import { useRouter } from 'vue-router';
 import styles from './styles/settings.scss'
 
-let router = useRouter()
+const router = useRouter()
+const logout = () => {
+  localStorage.removeItem('token')
+}
   //
 </script>
 <style>
@@ -22,5 +28,11 @@ let router = useRouter()
     text-align: center;
     color: #2c3e50;
     margin-top: 60px;
+  }
+  .menu {
+    position: fixed;
+    right: 0;
+    margin: 1rem;
+    cursor: pointer;
   }
 </style>

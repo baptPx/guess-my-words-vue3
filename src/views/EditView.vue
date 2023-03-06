@@ -3,7 +3,7 @@
 <div v-if="route.params.mapId && mapData">
   <edit-component 
     :points="points" 
-    :mapUrl="API_URL + '/images/' + mapData.fileName + '.png'"
+    :mapUrl="API_URL + '/images/' + mapData.fileName"
     @add-point="addPoint"
     >
   </edit-component>
@@ -41,7 +41,7 @@ const router = useRouter()
 
 onMounted(async () => {
   if(route.params.mapId) {
-    APIService.get(`/api/maps/${route.params.mapId}/edit`)
+    APIService.get(`/api/edits/${route.params.mapId}`)
       .then(data =>  mapData.value = data)
       .catch(() => router.push('/edit'))
   }
@@ -56,13 +56,13 @@ const upload = () => {
   formData.append('map', input.value['0']);
   formData.append('title', title.value)
 
-  APIService.post('/api/maps', formData).then(res => {
+  APIService.post('/api/edits', formData).then(res => {
     mapData.value = res
     router.push('/edit/' + mapData.value?.id)
   })
 }
 const addPoint = (point: IPoint) => {
-  APIService.post(`/api/maps/${mapData.value?.id}/edit`, point)
+  APIService.post(`/api/edits/${mapData.value?.id}`, point)
 }
 </script>
 <style>
